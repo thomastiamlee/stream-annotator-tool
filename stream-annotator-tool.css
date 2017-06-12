@@ -11,6 +11,20 @@ div#stream-annotator-tool-range {
 	position: relative;
 }
 
+@keyframes changeColor {
+  0% {
+    border-bottom-color: #e84120;
+  }
+  
+  50% {
+    border-bottom-color: #ffad9e;
+  }
+  
+  100% {
+    border-bottom-color: #e84120;
+  }
+}
+
 div#stream-annotator-tool-range-arrow {
 	visibility: hidden;
 	cursor: pointer;
@@ -22,6 +36,8 @@ div#stream-annotator-tool-range-arrow {
   border-right: 15px solid transparent;
   border-bottom: 20px solid;
 	border-bottom-color: red;
+	animation: changeColor 1s;
+	animation-iteration-count: infinite;
 }
 
 canvas#stream-annotator-tool-labels {
@@ -35,7 +51,6 @@ canvas#stream-annotator-tool-labels {
 div#stream-annotator-labels-div {
 	width: 100%;
 	text-align: center;
-	height: 45px;
 }
 
 a.stream-annotator-label {
