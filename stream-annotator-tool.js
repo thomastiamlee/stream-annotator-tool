@@ -4,15 +4,69 @@ streamAnnotatorToolInitialize = function(options) {
 	var labels = options.labels;
 	var slidercallback = options.slidercallback;
 	var isSelectingRange = false; // true if the user is currently dragging the range of the annotation
-		
 	// Annotation data
-	var annotationData = {
-		annotations: []
-	};
+	var annotations = [];
+	function addAnnotationData(labelid, color, start, end) {
+		if (start > end) {
+			var temp = start;
+			start = end;
+			end = temp;
+		}
+		annotations.push({labelid: labelid, color: color, start: start, end: end});
+	}
+	// current selection
+	var currentSelection = {
+		start: null,
+		end: null,
+		labelid: null,
+		color: null
+	}
+	function setSelection(labelid, color) {
+		currentSelection.labelid = labelid;
+		currentSelection.color = color;
+	}
+	function setSelectionRange(start, end) {
+		currentSelection.start = start;
+		currentSelection.end = end;
+	}
+	function hasCurrentSelection() {
+		return currentSelection.start ? true : false;
+	}
+	function removeCurrentSelection() {
+		currentSelection = {
+			start: null,
+			end: null,
+			labelid: null,
+			color: null
+		}
+	}
 	
 	// Canvas variables
 	var canvas = null;
 	var context = null;
+	
+	// Redraw labels and arrows
+	function redrawElements() {
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		for (var i = 0; i < annotations.length; i++) {
+			var annotation = annotations[i];
+			context.fillStyle = annotation.color;
+			context.fillRect(annotation.start, 0, annotation.end - annotation.start, canvas.height);
+		}
+		if (currentSelection.start != null) {
+			var labelid = currentSelection.labelid;
+			var start = currentSelection.start;
+			var end = currentSelection.end;
+			var color = currentSelection.color;
+			context.fillStyle = color;
+			if (start < end) {
+				context.fillRect(start, 0, end - start, canvas.height);
+			}
+			else {
+				context.fillRect(end, 0, start - end, canvas.height);
+			}
+		}
+	}
 	
 	// Initialize the UI of the annotator tool.
 	function initializeUI() {
@@ -60,7 +114,7 @@ streamAnnotatorToolInitialize = function(options) {
 			$("div#stream-annotator-tool-slider").on( "slide", function(value) {
 				slidercallback($(this).slider("value"));
 			});
-			$("div#stream-annotator-tool-slider").on( "change", function(value) {
+			$("div#stream-annotator-tool-slider").on( "slidechange", function(value) {
 				slidercallback($(this).slider("value"));
 			});
 		}
@@ -69,14 +123,23 @@ streamAnnotatorToolInitialize = function(options) {
 	// attach annotation events
 	function attachAnnotationEvents() {
 		$("a.stream-annotator-label").click(function() {
+			if (hasCurrentSelection()) {
+				addAnnotationData(currentSelection.labelid, currentSelection.color, currentSelection.start, currentSelection.end);
+				removeCurrentSelection();
+			}
+			
 			var labelid = $(this).find("span.stream-annotator-hidden").text();
 			var currentTime = $("div#stream-annotator-tool-slider").slider("value");
+			var start = currentTime - 2;
+			var end = currentTime + 2;
 			var color = $(this).css("background-color");
+			setSelection(labelid, color);
+			setSelectionRange(start, end);
+			redrawElements();
+			
 			var arrow = $("div#stream-annotator-tool-range-arrow");
 			var arrowWidth = arrow.outerWidth();
-			var normalized = currentTime / duration * $("div#stream-annotator-tool-slider").width();
-			context.fillStyle = color;
-			context.fillRect(currentTime - 2, 0, 4, canvas.height);
+			var normalized = currentTime / duration * $("div#stream-annotator-tool-slider").outerWidth();
 			// Compute position of arrow
 			var offset = normalized + 2;
 			arrow.css({left: offset + "px", visibility: "visible"});
@@ -93,6 +156,10 @@ streamAnnotatorToolInitialize = function(options) {
 				if (isSelectingRange) {
 					var x = event.pageX - $("div#stream-annotator-tool-range").offset().left;
 					arrow.css({left: (x - arrowWidth / 2) + "px", visibility: "visible"});
+					var real = (x - arrowWidth / 2) / $("div#stream-annotator-tool-slider").outerWidth() * duration;
+					setSelectionRange(currentSelection.start, real);
+					$("div#stream-annotator-tool-slider").slider("value", real);
+					redrawElements();
 				}
 			});
 		});
