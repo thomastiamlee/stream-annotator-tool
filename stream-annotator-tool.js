@@ -1,9 +1,12 @@
-streamAnnotatorToolInitialize = function() {
+streamAnnotatorToolInitialize = function(options) {
+	var duration = options.duration;
+	var step = options.step;
+	
 	// Initialize the UI of the annotator tool.
 	function initializeUI() {
 		// Create the slider.
 		target.append($("<input />")
-			.attr({id: "stream-annotator-tool-slider", type: "range", min: "0", max: "100", step: "1"})
+			.attr({id: "stream-annotator-tool-slider", type: "range", min: "0", max: duration, step: step})
 			)
 	}
 	
