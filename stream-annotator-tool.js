@@ -3,6 +3,7 @@ streamAnnotatorToolInitialize = function(options) {
 	var step = options.step;
 	var labels = options.labels;
 	var slidercallback = options.slidercallback;
+	var isSelectingRange = false; // true if the user is currently dragging the range of the annotation
 		
 	// Annotation data
 	var annotationData = {
@@ -76,10 +77,24 @@ streamAnnotatorToolInitialize = function(options) {
 			var normalized = currentTime / duration * $("div#stream-annotator-tool-slider").width();
 			context.fillStyle = color;
 			context.fillRect(currentTime - 2, 0, 4, canvas.height);
-			
 			// Compute position of arrow
 			var offset = normalized + 2;
 			arrow.css({left: offset + "px", visibility: "visible"});
+			// Add range selection events
+			arrow.mousedown(function() {
+				isSelectingRange = true;
+			});			
+			$(document).mouseup(function() {
+				if (isSelectingRange) {
+					isSelectingRange = false;
+				}
+			});
+			$(document).mousemove(function(event) {
+				if (isSelectingRange) {
+					var x = event.pageX - $("div#stream-annotator-tool-range").offset().left;
+					arrow.css({left: (x - arrowWidth / 2) + "px", visibility: "visible"});
+				}
+			});
 		});
 	}
 	
@@ -92,4 +107,5 @@ streamAnnotatorToolInitialize = function(options) {
 	initializeUI();
 	attachSliderCallback();
 	attachAnnotationEvents();
+	
 };
