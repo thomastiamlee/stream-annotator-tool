@@ -1,6 +1,7 @@
 streamAnnotatorToolInitialize = function(options) {
 	var duration = options.duration;
 	var step = options.step;
+	var labels = options.labels;
 	
 	// Initialize the UI of the annotator tool.
 	function initializeUI() {
@@ -9,10 +10,21 @@ streamAnnotatorToolInitialize = function(options) {
 			.attr({id: "stream-annotator-tool-slider", type: "range", min: "0", max: duration, step: step})
 			);
 		// Create the canvas for labels
-		target.append($("<canvas></canvas")
+		target.append($("<canvas></canvas>")
 			.attr({id: "stream-annotator-tool-labels", width: duration})
 		);
 		// Create the buttons
+		target.append($("<div></div>")
+			.attr({id: "stream-annotator-labels-div"})
+		);
+		var labelsTarget = $("div#stream-annotator-labels-div");
+		for (var i = 0; i < labels.length; i++) {
+			labelsTarget.append($("<a></a>")
+				.addClass("stream-annotator-label")
+				.css({"background-color": labels[i].color})
+				.html(labels[i].name)
+			);
+		}
 	}
 	
 	target = $("div#stream-annotator-tool");

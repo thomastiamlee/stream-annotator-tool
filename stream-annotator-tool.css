@@ -7,3 +7,7 @@ canvas#stream-annotator-tool-labels {
 	height: 20px;
 	background-color: red;
 }
+
+div#stream-annotator-labels-div {
+	width: 100%;
+}
