@@ -12,6 +12,7 @@ div#stream-annotator-tool-range {
 }
 
 div#stream-annotator-tool-range-arrow {
+	visibility: hidden;
 	position: absolute;
 	top: 5px;
 	width: 0; 

@@ -71,10 +71,15 @@ streamAnnotatorToolInitialize = function(options) {
 			var labelid = $(this).find("span.stream-annotator-hidden").text();
 			var currentTime = $("div#stream-annotator-tool-slider").slider("value");
 			var color = $(this).css("background-color");
-			
+			var arrow = $("div#stream-annotator-tool-range-arrow");
+			var arrowWidth = arrow.outerWidth();
+			var normalized = currentTime / duration * $("div#stream-annotator-tool-slider").width();
 			context.fillStyle = color;
 			context.fillRect(currentTime - 2, 0, 4, canvas.height);
 			
+			// Compute position of arrow
+			var offset = normalized + 2;
+			arrow.css({left: offset + "px", visibility: "visible"});
 		});
 	}
 	
