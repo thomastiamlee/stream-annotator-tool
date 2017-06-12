@@ -4,6 +4,7 @@ streamAnnotatorToolInitialize = function(options) {
 	var labels = options.labels;
 	var slidercallback = options.slidercallback;
 	var isSelectingRange = false; // true if the user is currently dragging the range of the annotation
+	
 	// Annotation data
 	var annotations = [];
 	function addAnnotationData(labelid, color, start, end) {
@@ -14,7 +15,7 @@ streamAnnotatorToolInitialize = function(options) {
 		}
 		annotations.push({labelid: labelid, color: color, start: start, end: end});
 	}
-	// current selection
+	// Current selection
 	var currentSelection = {
 		start: null,
 		end: null,
@@ -165,6 +166,15 @@ streamAnnotatorToolInitialize = function(options) {
 		});
 	}
 	
+	// Save the annotation data
+	$("div#stream-annotator-tool").get(0).save = function() {
+		if (hasCurrentSelection()) {
+			addAnnotationData(currentSelection.labelid, currentSelection.color, currentSelection.start, currentSelection.end);
+			removeCurrentSelection();
+		}
+		console.log(annotations);
+	}
+	
 	target = $("div#stream-annotator-tool");
 	// Check if there is only one target div in the page.
 	if (target.length != 1) {
@@ -174,5 +184,4 @@ streamAnnotatorToolInitialize = function(options) {
 	initializeUI();
 	attachSliderCallback();
 	attachAnnotationEvents();
-	
 };
