@@ -11,8 +11,8 @@ See the following link for a demo (coming soon).
 
 ## Dependencies
 You must have the following referenced in order for this tool to work.
-1. [JQuery 3] (http://jquery.com/download/)
-2. [JQuery-UI CSS] (http://jqueryui.com/download/)
+1. [JQuery 3](http://jquery.com/download/)
+2. [JQuery-UI CSS](http://jqueryui.com/download/)
 
 ## Usage
 1. To use, first reference `stream-annotator-tool.js` in your code.
@@ -25,7 +25,8 @@ You must have the following referenced in order for this tool to work.
 
 3. Call the function `streamAnnotatorToolInitialize(options)` to initialize the tool.
 
-`streamAnnotatorToolInitialize({
+```
+streamAnnotatorToolInitialize({
 	duration: 2206,
 	step: 1,
 	labels: [
@@ -35,23 +36,26 @@ You must have the following referenced in order for this tool to work.
 		{labelid: 4, color: "#93c6ed", font: "black", name: "(BORED)"},
 	],
 	slidercallback: function(value) { $("video#playback").get(0).currentTime = value }
-});`
+});
+```
 
 #### Options
 - **duration** (required): The length of the stream
 - **step** (defaults to 1 if not provided): The increment value of the slider
 - **labels** (required): An array of JavaScript objects representing a label
-    Each label object has the following properties:
-		- **labelid**  (required): An ID assigned to the label, used to identify it in the resulting JSON file. Must be unique.
-		- **color** (required): The color assigned to the label.
-		- **font** (defaults to "black" if not provided): The font color assigned to the label.
-		- **name** (required): The name of the label.
+    - Each label object has the following properties:
+    - **labelid**  (required): An ID assigned to the label, used to identify it in the resulting JSON file. Must be unique.
+    - **color** (required): The color assigned to the label.
+    - **font** (defaults to "black" if not provided): The font color assigned to the label.
+    - **name** (required): The name of the label.
 - **sliderCallback** (optional): A function to be called whenever the slider is moved. Use this function to update the stream whenever the user moves the slider control.
 
 4. To save the annotation, call the `save()` function on the `div`.
 
-`var tool = document.getElementById("stream-annotator-tool");
-tool.save();`
+```
+var tool = document.getElementById("stream-annotator-tool");
+tool.save();
+```
 
 ## Feedback and Bug Reports
 For comments and bug reports, please send an email to thomasjamestiamlee@gmail.com.
