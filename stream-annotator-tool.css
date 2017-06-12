@@ -1,5 +1,6 @@
 input#stream-annotator-tool-slider {
 	width: 100%;
+	margin: 0px;
 }
 
 canvas#stream-annotator-tool-labels {
@@ -10,4 +11,17 @@ canvas#stream-annotator-tool-labels {
 
 div#stream-annotator-labels-div {
 	width: 100%;
+	text-align: center;
+	height: 45px;
+}
+
+a.stream-annotator-label {
+	display: inline-block;
+	font-family: Arial, Sans-serif;
+	font-weight: bold;
+	padding: 15px;
+	margin: 15px;
+	border: 2px solid black;
+	border-radius: 4px;
+	cursor: pointer;
 }

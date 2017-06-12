@@ -18,6 +18,7 @@ streamAnnotatorToolInitialize = function(options) {
 			.attr({id: "stream-annotator-labels-div"})
 		);
 		var labelsTarget = $("div#stream-annotator-labels-div");
+		
 		for (var i = 0; i < labels.length; i++) {
 			labelsTarget.append($("<a></a>")
 				.addClass("stream-annotator-label")
