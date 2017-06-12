@@ -25,3 +25,7 @@ a.stream-annotator-label {
 	border-radius: 4px;
 	cursor: pointer;
 }
+
+span.stream-annotator-hidden {
+	display: none;
+}

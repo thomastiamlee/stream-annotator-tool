@@ -4,6 +4,9 @@ streamAnnotatorToolInitialize = function(options) {
 	var labels = options.labels;
 	var slidercallback = options.slidercallback;
 	
+	// Annotation data
+	
+	
 	// Initialize the UI of the annotator tool.
 	function initializeUI() {
 		// Create the slider.
@@ -21,11 +24,24 @@ streamAnnotatorToolInitialize = function(options) {
 		var labelsTarget = $("div#stream-annotator-labels-div");
 		
 		for (var i = 0; i < labels.length; i++) {
-			labelsTarget.append($("<a></a>")
+			var label = labelsTarget.append($("<a></a>")
 				.addClass("stream-annotator-label")
 				.css({"background-color": labels[i].color})
 				.html(labels[i].name)
+				.append($("<span></span>")
+					.addClass("stream-annotator-hidden")
+					.html(labels[i].labelid)
+				)
 			);
+		}
+	}
+	
+	// attach callback event for slider
+	function attachCallback() {
+		if (slidercallback) {
+			$("input#stream-annotator-tool-slider").on( "input", function(value) {
+				slidercallback(value.currentTarget.value);
+			});
 		}
 	}
 	
@@ -36,11 +52,5 @@ streamAnnotatorToolInitialize = function(options) {
 		return;
 	}
 	initializeUI();
-	
-	// attach callback event for slider
-	if (slidercallback) {
-		$("input#stream-annotator-tool-slider").on( "input", function(value) {
-			slidercallback(value.currentTarget.value);
-		});
-	}
+	attachCallback();
 };
