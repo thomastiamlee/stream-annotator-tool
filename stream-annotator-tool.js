@@ -7,7 +7,12 @@ streamAnnotatorToolInitialize = function(options) {
 		// Create the slider.
 		target.append($("<input />")
 			.attr({id: "stream-annotator-tool-slider", type: "range", min: "0", max: duration, step: step})
-			)
+			);
+		// Create the canvas for labels
+		target.append($("<canvas></canvas")
+			.attr({id: "stream-annotator-tool-labels", width: duration})
+		);
+		// Create the buttons
 	}
 	
 	target = $("div#stream-annotator-tool");

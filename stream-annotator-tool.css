@@ -1,3 +1,9 @@
 input#stream-annotator-tool-slider {
 	width: 100%;
 }
+
+canvas#stream-annotator-tool-labels {
+	width: 100%;
+	height: 20px;
+	background-color: red;
+}
