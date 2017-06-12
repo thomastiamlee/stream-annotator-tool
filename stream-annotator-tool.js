@@ -27,6 +27,13 @@ streamAnnotatorToolInitialize = function(options) {
 		// Initialize canvas tools
 		canvas = $("canvas#stream-annotator-tool-labels").get(0);
 		context = canvas.getContext("2d");
+		// Create the range control
+		target.append($("<div></div>")
+			.attr({id: "stream-annotator-tool-range"})
+		);
+		$("div#stream-annotator-tool-range").append($("<div></div>")
+			.attr({id: "stream-annotator-tool-range-arrow"})
+		);
 		// Create the buttons
 		target.append($("<div></div>")
 			.attr({id: "stream-annotator-labels-div"})

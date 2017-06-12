@@ -6,6 +6,22 @@ div#stream-annotator-tool-slider {
 	margin-bottom: 10px;
 }
 
+div#stream-annotator-tool-range {
+	height: 30px;
+	position: relative;
+}
+
+div#stream-annotator-tool-range-arrow {
+	position: absolute;
+	top: 5px;
+	width: 0; 
+  height: 0; 
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 20px solid;
+	border-bottom-color: red;
+}
+
 canvas#stream-annotator-tool-labels {
 	display: block;
 	width: calc(100% - 35px);
