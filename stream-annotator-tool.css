@@ -1,12 +1,17 @@
-input#stream-annotator-tool-slider {
-	width: 100%;
-	margin: 0px;
+div#stream-annotator-tool-slider {
+	display: block;
+	width: calc(100% - 35px);
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 canvas#stream-annotator-tool-labels {
-	width: 100%;
+	display: block;
+	width: calc(100% - 35px);
+	margin: 0 auto;
 	height: 20px;
-	background-color: red;
+	background-color: #313131;
 }
 
 div#stream-annotator-labels-div {
