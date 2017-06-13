@@ -14,6 +14,7 @@ streamAnnotatorToolInitialize = function(options) {
 			end = temp;
 		}
 		annotations.push({labelid: labelid, color: color, start: start, end: end});
+		reevaluateAnnotations();
 	}
 	// Current selection
 	var currentSelection = {
@@ -45,7 +46,7 @@ streamAnnotatorToolInitialize = function(options) {
 	// Canvas variables
 	var canvas = null;
 	var context = null;
-	
+		
 	// Redraw labels and arrows
 	function redrawElements() {
 		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -65,6 +66,60 @@ streamAnnotatorToolInitialize = function(options) {
 			}
 			else {
 				context.fillRect(end, 0, Math.max(start - end, 4), canvas.height);
+			}
+		}
+	}
+	
+	// Check for overlapping labels and sort / re-evaluate all annotations.
+	function reevaluateAnnotations() {
+		var points = [];
+		var rec = [];
+		var col = [];
+		var res = [];
+		for (var i = 0; i < annotations.length; i++) {
+			var a = annotations[i];
+			if (points.indexOf(a.start) == -1) {
+				points.push(a.start);
+			}
+			if (points.indexOf(a.end) == -1) {
+				points.push(a.end);
+			}
+		}
+		points.sort(function(a, b) { return a - b; });
+		for (var i = 0; i < points.length - 1; i++) {
+			var s = points[i];
+			var e = points[i + 1];
+			for (var j = annotations.length - 1; j >= 0; j--) {
+				var a = annotations[j];
+				if (!(a.start >= e || a.end <= s)) {
+					rec[i] = a.labelid;
+					col[i] = a.color;
+					break;
+				}
+			}
+		}
+				
+		for (var i = 0; i < points.length - 1; i++) {
+			if (rec[i] != undefined && rec[i + 1] != undefined) {
+				if (rec[i] == rec[i + 1]) {
+					points[i + 1] = points[i];
+					points.splice(i, 1);
+					rec.splice(i, 1);
+					col.splice(i, 1);
+					i--;
+				}
+			}
+		}
+				
+		annotations = [];
+		for (var i = 0; i < points.length - 1; i++) {
+			if (rec[i] != undefined) {
+				annotations.push({
+					start: points[i],
+					end: points[i + 1],
+					labelid: rec[i],
+					color: col[i]
+				});
 			}
 		}
 	}
@@ -172,61 +227,7 @@ streamAnnotatorToolInitialize = function(options) {
 			addAnnotationData(currentSelection.labelid, currentSelection.color, currentSelection.start, currentSelection.end);
 			removeCurrentSelection();
 		}
-		
-		var points = [];
-		var rec = [];
-		var res = [];
-		for (var i = 0; i < annotations.length; i++) {
-			var a = annotations[i];
-			if (points.indexOf(a.start) == -1) {
-				points.push(a.start);
-			}
-			if (points.indexOf(a.end) == -1) {
-				points.push(a.end);
-			}
-		}
-		points.sort(function(a, b) { return a - b; });
-		for (var i = 0; i < points.length - 1; i++) {
-			var s = points[i];
-			var e = points[i + 1];
-			for (var j = annotations.length - 1; j >= 0; j--) {
-				var a = annotations[j];
-				if (!(a.start >= e || a.end <= s)) {
-					rec[i] = a.labelid;
-					break;
-				}
-			}
-		}
-		console.log(points);
-		console.log(rec);
-				
-		for (var i = 0; i < points.length - 1; i++) {
-			if (rec[i] != undefined && rec[i + 1] != undefined) {
-				if (rec[i] == rec[i + 1]) {
-					points[i + 1] = points[i];
-					points.splice(i, 1);
-					rec.splice(i, 1);
-					i--;
-				}
-			}
-		}
-		
-		console.log("===");
-		
-		var result = [];
-		for (var i = 0; i < points.length - 1; i++) {
-			if (rec[i] != undefined) {
-				result.push({
-					start: points[i],
-					end: points[i + 1],
-					label: rec[i]
-				});
-			}
-		}
-		
-		console.log(points);
-		console.log(rec);
-		console.log(result);
+		console.log(annotations);
 	}
 	
 	target = $("div#stream-annotator-tool");
