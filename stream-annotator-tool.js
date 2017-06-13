@@ -32,7 +32,7 @@ streamAnnotatorToolInitialize = function(options) {
 		currentSelection.end = end;
 	}
 	function hasCurrentSelection() {
-		return currentSelection.start ? true : false;
+		return currentSelection.start != null;
 	}
 	function removeCurrentSelection() {
 		currentSelection = {
@@ -196,6 +196,7 @@ streamAnnotatorToolInitialize = function(options) {
 			var color = $(this).css("background-color");
 			setSelection(labelid, color);
 			setSelectionRange(start, end);
+			
 			redrawElements();
 			
 			var arrow = $("div#stream-annotator-tool-range-arrow");
