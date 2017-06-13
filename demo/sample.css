@@ -1,0 +1,40 @@
+div#container {
+	width: 60%;
+	margin: 0 auto;
+	text-align: right;
+}
+
+div#header, div#loading {
+	font-family: Arial;
+}
+
+div#header > h1 {
+	text-align: center;
+}
+
+div#header > p {
+	text-align: left;
+}
+
+video#playback {
+	width: 100%;
+	max-height: 60vh;
+}
+
+body {
+	text-align: center;
+}
+
+a#savebutton {
+	display: inline-block;
+	font-family: Arial, Sans-serif;
+	font-weight: bold;
+	color: white;
+	background-color: black;
+	padding: 10px;
+	cursor: pointer;
+}
+
+pre#editor {
+	height: 60vh;
+}

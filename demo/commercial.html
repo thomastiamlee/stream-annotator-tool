@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="stylesheet" href="../stream-annotator-tool.css" />
+		<link rel="stylesheet" href="jquery-ui.min.css" />
+		<link rel="stylesheet" href="sample.css" />
+	</head>
+	<body>
+		<div id="loading">
+			<p>Loading the video...</p>
+		</div>
+		<div id="container">
+			<div id="header">
+				<h1>SAMPLE COMMERCIAL ANNOTATION</h1>
+				<p><strong>INSTRUCTIONS</strong>. Click on the labels to add annotation to the current time. Drag the arrow to adjust the range of the annotation. To delete an annotation, right click on it. Click on SAVE AND DOWNLOAD to download the annotation data as a .JSON file.</p>
+			</div>
+			<video id="playback" src="commercial.mp4"></video>
+			<div id="stream-annotator-tool">	</div>
+			<a id="savebutton">SAVE AND DOWNLOAD</a>
+		</div>
+		
+		<script src="jquery-3.1.1.min.js"></script>
+		<script src="jquery-ui.min.js"></script>
+		<script src="../stream-annotator-tool.js"></script>
+		<script>
+			$(document).ready(function() {				
+				document.getElementById("playback").onloadedmetadata = function() {
+					$("div#loading").css("display", "none");
+					var duration = $("video#playback").get(0).duration;
+					streamAnnotatorToolInitialize({
+						duration: duration,
+						step: 1,
+						labelbackground: "white",
+						labels: [
+							{labelid: 1, color: "#6b700a", font: "white", name: "HAPPY"},
+							{labelid: 2, color: "#0c126d", font: "white", name: "SAD"},
+							{labelid: 3, color: "#5b5d5e", font: "white", name: "BORING"},
+							{labelid: 4, color: "#7e159b", font: "white", name: "FUNNY"},
+							{labelid: 5, color: "#065612", font: "white", name: "EXCITING"},
+							{labelid: 6, color: "#872f1c", font: "white", name: "SCARY"},
+						],
+						slidercallback: function(value) { console.log(value); $("video#playback").get(0).currentTime = value }
+					});
+					
+					$("a#savebutton").click(function() {
+						var tool = document.getElementById("stream-annotator-tool");
+						tool.save();
+					});
+				};
+			});
+		</script>
+	</body>
+</html>
