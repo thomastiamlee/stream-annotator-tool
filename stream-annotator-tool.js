@@ -1,8 +1,7 @@
 streamAnnotatorToolInitialize = function(options) {
 	var duration = options.duration;
-	var step = options.step;
+	var step = options.step ? options.step : 1;
 	var labels = options.labels;
-	var font = options.font;
 	var slidercallback = options.slidercallback;
 	var isSelectingRange = false; // true if the user is currently dragging the range of the annotation
 	
@@ -153,9 +152,10 @@ streamAnnotatorToolInitialize = function(options) {
 		var labelsTarget = $("div#stream-annotator-labels-div");
 		
 		for (var i = 0; i < labels.length; i++) {
+			labels[i].font = labels[i].font ? labels[i].font : "black";
 			var label = labelsTarget.append($("<a></a>")
 				.addClass("stream-annotator-label")
-				.css({"background-color": labels[i].color, "color": labels[i].font ? labels[i].font : "black"})
+				.css({"background-color": labels[i].color, "color": labels[i].font})
 				.html(labels[i].name)
 				.append($("<span></span>")
 					.addClass("stream-annotator-hidden")
@@ -218,11 +218,20 @@ streamAnnotatorToolInitialize = function(options) {
 			$(document).mousemove(function(event) {
 				if (isSelectingRange) {
 					var x = event.pageX - $("div#stream-annotator-tool-range").offset().left;
-					if (x - arrowWidth / 2 < 0 || x + arrowWidth / 2 > $("div#stream-annotator-tool-range").width()) {
-						return;
-					}					
-					arrow.css({left: (x - arrowWidth / 2) + "px", visibility: "visible"});
 					var real = (x - arrowWidth / 2) / $("div#stream-annotator-tool-slider").outerWidth() * duration;
+					if (real < 0 || real > duration) {
+						return;
+					}
+					var c1 = step * (Math.floor(real / step));
+					if ((real - c1) < (step / 2)) {
+						real = c1;
+					}
+					else {
+						real = Math.min(duration, c1 + step);
+					}
+					var normalized = real / duration * $("div#stream-annotator-tool-slider").outerWidth();
+					var offset = normalized + 2;
+					arrow.css({left: offset + "px", visibility: "visible"});
 					setSelectionRange(currentSelection.start, real);
 					$("div#stream-annotator-tool-slider").slider("value", real);
 					redrawElements();
