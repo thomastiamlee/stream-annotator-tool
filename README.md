@@ -1,5 +1,5 @@
 # Stream Annotator Tool
-This is a tool written in JavaScript designed for annotating videos or other time series data (e.g. audio, code history). The tool allows the user to view the stream, and then assign labels on different time spans on the stream. It can also save the annotations as a .json file for easy processing. The stream, labels, and label colors can be customized for your needs.
+This is a tool written in JavaScript designed for annotating videos or other time series data (e.g. audio, code history). The tool allows the user to view the stream, and then assign labels on different time spans on the stream. It can also save the annotations as a .json file for easy processing. The stream, labels, and label colors can be customized for your needs. This may be useful for data collection tasks in several fields like empathic computing.
 
 ## Features
 1. Customizable labels.
@@ -12,8 +12,14 @@ This is a tool written in JavaScript designed for annotating videos or other tim
 3. Drag the arrow to adjust range of annotation.
 4. Right click on an annotation to remove it.
 
-## Demo
-See the following link for a demo (coming soon).
+## Images and Demo
+![Code Annotation Screenshot](https://raw.githubusercontent.com/thomastiamlee/stream-annotator-tool/master/demo/code.PNG)
+
+![Commercial Annotation Screenshot](https://raw.githubusercontent.com/thomastiamlee/stream-annotator-tool/master/demo/commercial.PNG)
+
+Refer to `code.html` and `commercial.html` in the demos folder for an example application.
+
+You can try out `code.html` (Code annotation) live in the [link](https://cdn.rawgit.com/thomastiamlee/stream-annotator-tool/94d5ef0d/demo/code.html).
 
 ## Dependencies
 You must have the following referenced in order for this tool to work.
