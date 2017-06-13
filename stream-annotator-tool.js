@@ -2,6 +2,7 @@ streamAnnotatorToolInitialize = function(options) {
 	var duration = options.duration;
 	var step = options.step ? options.step : 1;
 	var labels = options.labels;
+	var labelbackground = options.labelbackground ? options.labelbackground : "black";
 	var slidercallback = options.slidercallback;
 	var isSelectingRange = false; // true if the user is currently dragging the range of the annotation
 	
@@ -52,6 +53,9 @@ streamAnnotatorToolInitialize = function(options) {
 	// Redraw labels and arrows
 	function redrawElements() {
 		context.clearRect(0, 0, canvas.width, canvas.height);
+		context.fillStyle = labelbackground;
+		context.fillRect(0, 0, canvas.width, canvas.height);
+		context.imageSmoothingEnabled = false;
 		for (var i = 0; i < annotations.length; i++) {
 			var annotation = annotations[i];
 			context.fillStyle = annotation.color;
@@ -63,11 +67,12 @@ streamAnnotatorToolInitialize = function(options) {
 			var end = currentSelection.end;
 			var color = currentSelection.color;
 			context.fillStyle = color;
+			var min = 2 * duration / $("canvas#stream-annotator-tool-labels").width()
 			if (start < end) {
-				context.fillRect(start, 0, Math.max(end - start, 4), canvas.height);
+				context.fillRect(start, 0, Math.max(end - start, min), canvas.height);
 			}
 			else {
-				context.fillRect(end, 0, Math.max(start - end, 4), canvas.height);
+				context.fillRect(end, 0, Math.max(start - end, min), canvas.height);
 			}
 		}
 	}
@@ -297,4 +302,5 @@ streamAnnotatorToolInitialize = function(options) {
 	attachSliderCallback();
 	attachAnnotationEvents();
 	attachCanvasEvents();
+	redrawElements();
 };
