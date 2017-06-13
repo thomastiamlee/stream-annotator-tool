@@ -261,7 +261,11 @@ streamAnnotatorToolInitialize = function(options) {
 			addAnnotationData(currentSelection.labelid, currentSelection.color, currentSelection.start, currentSelection.end);
 			removeCurrentSelection();
 		}
-		console.log(annotations);
+		var toDownload = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(annotations));
+		var dummyElement = document.createElement("a");
+		dummyElement.setAttribute("href", toDownload);
+		dummyElement.setAttribute("download", "result.json");
+		dummyElement.click();
 	}
 	
 	$(window).resize(function() {
