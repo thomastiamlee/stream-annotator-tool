@@ -6,6 +6,12 @@ This is a tool written in JavaScript designed for annotating videos or other tim
 2. Callback functions allow you to perform actions when the slider is moved, so it can easily be plugged in to different applications.
 3. Currently only supports single annotation at any given moment. If you put an annotation on top of another existing annotation, it will be overwritten.
 
+## Annotation Procedure
+1. You can move the slider to select the desired time.
+2. Click a label to add annotation at that point.
+3. Drag the arrow to adjust range of annotation.
+4. Right click on an annotation to remove it.
+
 ## Demo
 See the following link for a demo (coming soon).
 
