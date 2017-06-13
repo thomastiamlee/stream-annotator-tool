@@ -211,6 +211,9 @@ streamAnnotatorToolInitialize = function(options) {
 			$(document).mousemove(function(event) {
 				if (isSelectingRange) {
 					var x = event.pageX - $("div#stream-annotator-tool-range").offset().left;
+					if (x - arrowWidth / 2 < 0 || x + arrowWidth / 2 > $("div#stream-annotator-tool-range").width()) {
+						return;
+					}					
 					arrow.css({left: (x - arrowWidth / 2) + "px", visibility: "visible"});
 					var real = (x - arrowWidth / 2) / $("div#stream-annotator-tool-slider").outerWidth() * duration;
 					setSelectionRange(currentSelection.start, real);
