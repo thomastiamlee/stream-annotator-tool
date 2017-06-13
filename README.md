@@ -54,6 +54,7 @@ streamAnnotatorToolInitialize({
 #### Options
 - **duration** (required): The length of the stream
 - **step** (defaults to 1 if not provided): The increment value of the slider
+- **labelbackground** (defaults to "black" if not provided): The color of the background where the annotations are placed.
 - **labels** (required): An array of JavaScript objects representing a label
     - Each label object has the following properties:
     - **labelid**  (required): An ID assigned to the label, used to identify it in the resulting JSON file. Must be unique.
