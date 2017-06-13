@@ -2,6 +2,7 @@ streamAnnotatorToolInitialize = function(options) {
 	var duration = options.duration;
 	var step = options.step;
 	var labels = options.labels;
+	var font = options.font;
 	var slidercallback = options.slidercallback;
 	var isSelectingRange = false; // true if the user is currently dragging the range of the annotation
 	
@@ -154,7 +155,7 @@ streamAnnotatorToolInitialize = function(options) {
 		for (var i = 0; i < labels.length; i++) {
 			var label = labelsTarget.append($("<a></a>")
 				.addClass("stream-annotator-label")
-				.css({"background-color": labels[i].color})
+				.css({"background-color": labels[i].color, "color": labels[i].font ? labels[i].font : "black"})
 				.html(labels[i].name)
 				.append($("<span></span>")
 					.addClass("stream-annotator-hidden")
@@ -262,6 +263,16 @@ streamAnnotatorToolInitialize = function(options) {
 		}
 		console.log(annotations);
 	}
+	
+	$(window).resize(function() {
+		var currentTime = $("div#stream-annotator-tool-slider").slider("value");
+		var arrow = $("div#stream-annotator-tool-range-arrow");
+		var arrowWidth = arrow.outerWidth();
+		var normalized = currentTime / duration * $("div#stream-annotator-tool-slider").outerWidth();
+		// Compute position of arrow
+		var offset = normalized + 2;
+		arrow.css({left: offset + "px"});
+	});
 	
 	target = $("div#stream-annotator-tool");
 	// Check if there is only one target div in the page.
