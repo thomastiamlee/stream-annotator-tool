@@ -41,6 +41,8 @@ streamAnnotatorToolInitialize = function(options) {
 			labelid: null,
 			color: null
 		}
+		var arrow = $("div#stream-annotator-tool-range-arrow");
+		arrow.css({visibility: "hidden"});
 	}
 	
 	// Canvas variables
@@ -169,6 +171,11 @@ streamAnnotatorToolInitialize = function(options) {
 		if (slidercallback) {
 			$("div#stream-annotator-tool-slider").on( "slide", function(value) {
 				slidercallback($(this).slider("value"));
+				if (hasCurrentSelection()) {
+					addAnnotationData(currentSelection.labelid, currentSelection.color, currentSelection.start, currentSelection.end);
+					removeCurrentSelection();
+					isSelectingRange = false;
+				}
 			});
 			$("div#stream-annotator-tool-slider").on( "slidechange", function(value) {
 				slidercallback($(this).slider("value"));
