@@ -100,7 +100,6 @@ streamAnnotatorToolInitialize = function(options) {
 				}
 			}
 		}
-				
 		for (var i = 0; i < points.length - 1; i++) {
 			if (rec[i] != undefined && rec[i + 1] != undefined) {
 				if (rec[i] == rec[i + 1]) {
@@ -111,8 +110,7 @@ streamAnnotatorToolInitialize = function(options) {
 					i--;
 				}
 			}
-		}
-				
+		}	
 		annotations = [];
 		for (var i = 0; i < points.length - 1; i++) {
 			if (rec[i] != undefined) {
@@ -183,7 +181,7 @@ streamAnnotatorToolInitialize = function(options) {
 		}
 	}
 	
-	// attach annotation events
+	// Attach annotation events
 	function attachAnnotationEvents() {
 		$("a.stream-annotator-label").click(function() {
 			if (hasCurrentSelection()) {
@@ -231,6 +229,30 @@ streamAnnotatorToolInitialize = function(options) {
 		});
 	}
 	
+	// Attach events for deleting existing annotations
+	function attachCanvasEvents() {
+		$("canvas#stream-annotator-tool-labels").on("contextmenu", function(event) {
+			if (hasCurrentSelection()) {
+				addAnnotationData(currentSelection.labelid, currentSelection.color, currentSelection.start, currentSelection.end);
+				removeCurrentSelection();
+				isSelectingRange = false;
+			}
+			var x = event.pageX - $("div#stream-annotator-tool-range").offset().left;
+			var arrow = $("div#stream-annotator-tool-range-arrow");
+			var arrowWidth = arrow.outerWidth();
+			var real = (x - arrowWidth / 2) / $("div#stream-annotator-tool-slider").outerWidth() * duration;
+			for (var i = annotations.length - 1; i >= 0; i--) {
+				var a = annotations[i];
+				if (a.start < real && a.end >= real) {
+					annotations.splice(i, 1);
+					redrawElements();
+					break;
+				}
+			}
+			return false;
+		});
+	}
+	
 	// Save the annotation data
 	$("div#stream-annotator-tool").get(0).save = function() {
 		if (hasCurrentSelection()) {
@@ -249,4 +271,5 @@ streamAnnotatorToolInitialize = function(options) {
 	initializeUI();
 	attachSliderCallback();
 	attachAnnotationEvents();
+	attachCanvasEvents();
 };
