@@ -12,14 +12,14 @@ This is a tool written in JavaScript designed for annotating videos or other tim
 3. Drag the arrow to adjust range of annotation.
 4. Right click on an annotation to remove it.
 
-## Images and Demo
+## Images and Live Demo
 ![Code Annotation Screenshot](https://raw.githubusercontent.com/thomastiamlee/stream-annotator-tool/master/demo/code.PNG)
 
 ![Commercial Annotation Screenshot](https://raw.githubusercontent.com/thomastiamlee/stream-annotator-tool/master/demo/commercial.PNG)
 
 Refer to `code.html` and `commercial.html` in the demos folder for an example application.
 
-You can try out `code.html` (Code annotation) live in the [link](https://cdn.rawgit.com/thomastiamlee/stream-annotator-tool/94d5ef0d/demo/code.html).
+You can try out `code.html` (Code annotation) live in this [link](https://cdn.rawgit.com/thomastiamlee/stream-annotator-tool/94d5ef0d/demo/code.html).
 
 ## Dependencies
 You must have the following referenced in order for this tool to work.
