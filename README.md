@@ -70,5 +70,12 @@ var tool = document.getElementById("stream-annotator-tool");
 tool.save();
 ```
 
+5. To get the annotation as a JavaScript object, call the `getAnnotations()` function on the `div`.
+
+```
+var tool = document.getElementById("stream-annotator-tool");
+tool.getAnnotations();
+```
+
 ## Feedback and Bug Reports
 For comments and bug reports, please send an email to thomasjamestiamlee@gmail.com.
