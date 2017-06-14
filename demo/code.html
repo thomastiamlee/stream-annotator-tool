@@ -80,14 +80,12 @@
 
             if (eventData.action == "insert") {
               var range = new Range(startRow, startCol, startRow, startCol);
-							console.log(range);
-              var obj = document.replace(range, toAdd);
+							var obj = document.replace(range, toAdd);
               document.applyDeltas(obj);
             }
             else {
               var range = new Range(startRow, startCol, endRow, endCol);
-							console.log(range);
-              var obj = document.replace(range, "");
+							var obj = document.replace(range, "");
               document.applyDeltas(obj);
             }
             codeSnapShots.push({timestamp: timestamp, eventValue: document.getValue()});

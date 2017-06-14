@@ -282,6 +282,16 @@ streamAnnotatorToolInitialize = function(options) {
 		dummyElement.click();
 	}
 	
+	// Get the annotation data as a JSON file
+	$("div#stream-annotator-tool").get(0).getAnnotations = function() {
+		if (hasCurrentSelection()) {
+			addAnnotationData(currentSelection.labelid, currentSelection.color, currentSelection.start, currentSelection.end);
+			removeCurrentSelection();
+		}
+		var result = annotations;
+		return result;
+	}
+	
 	$(window).resize(function() {
 		var currentTime = $("div#stream-annotator-tool-slider").slider("value");
 		var arrow = $("div#stream-annotator-tool-range-arrow");
