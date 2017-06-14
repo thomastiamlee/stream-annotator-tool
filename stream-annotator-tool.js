@@ -292,6 +292,16 @@ streamAnnotatorToolInitialize = function(options) {
 		return result;
 	}
 	
+	// Clear the annotations
+	$("div#stream-annotator-tool").get(0).clear = function() {
+		if (hasCurrentSelection()) {
+			removeCurrentSelection();
+		}
+		annotations = [];
+		$("div#stream-annotator-tool-slider").slider("value", 0);
+		redrawElements();
+	}
+	
 	$(window).resize(function() {
 		var currentTime = $("div#stream-annotator-tool-slider").slider("value");
 		var arrow = $("div#stream-annotator-tool-range-arrow");
