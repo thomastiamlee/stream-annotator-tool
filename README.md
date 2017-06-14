@@ -77,5 +77,12 @@ var tool = document.getElementById("stream-annotator-tool");
 tool.getAnnotations();
 ```
 
+6. To remove all the annotations and start over, call the `clear()` function on the `div`.
+
+```
+var tool = document.getElementById("stream-annotator-tool");
+tool.clear();
+```
+
 ## Feedback and Bug Reports
 For comments and bug reports, please send an email to thomasjamestiamlee@gmail.com.
