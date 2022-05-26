@@ -1,5 +1,5 @@
 # Stream Annotator Tool
-This is a tool written in JavaScript designed for annotating videos or other time series data (e.g. audio, code history). The tool allows the user to view the stream, and then assign labels on different time spans on the stream. It can also save the annotations as a .json file for easy processing. The stream, labels, and label colors can be customized for your needs. This may be useful for data collection tasks in several fields like empathic computing.
+This is a tool written in JavaScript designed for annotating videos or other time series data (e.g. video, code history). The tool allows the user to view the stream, and then assign labels on different time spans on the stream. It can also save the annotations as a .json file for easy processing. The stream, labels, and label colors can be customized for your needs. This may be useful for data collection tasks in several fields like empathic computing.
 
 ## Features
 1. Customizable labels.
